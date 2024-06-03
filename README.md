@@ -1,7 +1,7 @@
 # Setting Up Azure Sentinel and Monitoring Failed RDP Logins from Around the World
 
 ## Description
-This is a walkthrough for setting up an Azure virtual machine as a honeypot to monitor failed Remote Desktop Protocol (RDP) login attempts from around the world. The motivation is to gain experience with Security Information and Event Management (SIEM) systems like Azure Sentinel, which are commonly required skills for cybersecurity jobs. The process involves ingesting failed RDP logs into Azure Sentinel, using PowerShell to extract geographic data from the attacker IPs, and visualizing the attacks on a world map within Azure Sentinel.
+This is a walkthrough for setting up an Azure virtual machine as a honeypot to monitor failed Remote Desktop Protocol (RDP) login attempts from around the world. The motivation is to gain experience with Security Information and Event Management (SIEM) systems like Azure Sentinel. The process involves ingesting failed RDP logs into Azure Sentinel, using PowerShell to extract geographic data from the attacker IPs, and visualizing the attacks on a world map within Azure Sentinel.
 
 ## Languages and Utilities Used
 - PowerShell
