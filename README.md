@@ -15,7 +15,7 @@ This is a walkthrough for setting up an Azure virtual machine as a honeypot to m
 - Microsoft Azure Cloud
 - Windows Virtual Machine 
 
-## Walkthrough (For Complete Beginners)
+## Walkthrough
 
 ### 1. Set up Azure Free Subscription
 1. Visit https://azure.microsoft.com/en-us/free/
