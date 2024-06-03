@@ -115,11 +115,4 @@ FailedRDPwithGeo_CL
 - Attack source patterns (Asia, Russia, etc.)
 - Attack frequency over time
 
-## Key Takeaways
-1. Any internet-exposed system will be targeted, regardless of its importance or contents.
-2. Avoid common usernames like "administrator" - they're the most guessed.
-3. Use strong passwords and multi-factor authentication.
-4. Restrict RDP access from the public internet.
-5. Monitor logs and analyze attack patterns.
-
-Remember to delete your "HoneypotLab" resource group in Azure when you're done to avoid using up your free credits!
+##Remember to delete your "HoneypotLab" resource group in Azure when you're done to avoid using up your free credits!
