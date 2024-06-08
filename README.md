@@ -63,7 +63,7 @@ This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a 
 5. From your local machine, ping the virtual machine's IP address to ensure it is accepting ICMP echo requests.
 
 ### Step 7: Configure the PowerShell Script
-1. Go to Start > Notepad > and copy and paste the following ...
+1. Copy the  following scrip ...
 
 ﻿# Get API key from here: https://ipgeolocation.io/
 $API_KEY      = "d4600b4efdef42b39828f5155041a457"
@@ -204,9 +204,8 @@ while ($true)
     }
 }
 
-3. Save it as "Log_Exporter.ps1" on the Desktop
 4. Open PowerShell ISE on the virtual machine and paste the script content.
-5. Save the script as "log-exporter.ps1" on the desktop.
+5. Save the script as "Log-Exporter.ps1" on the desktop.
 6. Obtain an API key from ipgeolocation.io by creating a free account.
 7. Replace the API key in the script with your own key.
 8. Run the PowerShell script.
