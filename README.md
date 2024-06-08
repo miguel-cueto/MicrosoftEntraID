@@ -1,118 +1,95 @@
-# Setting Up Azure Sentinel and Monitoring Failed RDP Logins from Around the World
+# Setting up Azure Sentinel with a Vulnerable VM Honeypot
 
 ## Description
-This is a walkthrough for setting up an Azure virtual machine as a honeypot to monitor failed Remote Desktop Protocol (RDP) login attempts from around the world. The motivation is to gain experience with Security Information and Event Management (SIEM) systems like Azure Sentinel. The process involves ingesting failed RDP logs into Azure Sentinel, using PowerShell to extract geographic data from the attacker IPs, and visualizing the attacks on a world map within Azure Sentinel.
+This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a cloud-based Security Information and Event Management (SIEM) solution, along with a vulnerable virtual machine (VM) honeypot. The goal is to monitor and log failed Remote Desktop Protocol (RDP) login attempts from various IP addresses around the world and visualize the attack data on a map.
 
-## Languages and Utilities Used
+## Language and Utilities
 - PowerShell
 - Azure Portal
-- Azure Virtual Machines
-- Azure Log Analytics Workspace 
 - Azure Sentinel
-- IPGeolocation API
+- Log Analytics Workspace
+- ipgeolocation.io API
 
 ## Environments Used
 - Microsoft Azure Cloud
-- Windows Virtual Machine 
+- Windows Virtual Machine
 
-## Walkthrough
+## Program Walkthrough
 
-### 1. Set up Azure Free Subscription
-1. Visit https://azure.microsoft.com/en-us/free/
-2. Click "Start free" and follow the signup process
-3. Provide payment details (you won't be charged, it's for verification)
-4. You'll get $200 in free credits to start
+### Step 1: Create an Azure Subscription
+1. Go to the Azure portal (portal.azure.com) and create a new Azure subscription. You will receive $200 worth of free credits for the first month.
 
-### 2. Create a Resource Group
-1. Log into the Azure portal at https://portal.azure.com
-2. Click "Create a resource" in the top left
-3. Search for "Resource group" and click Create
-4. Name it "HoneypotLab" and select your region
-5. Click Review + Create, then Create
+### Step 2: Create a Virtual Machine
+1. In the Azure portal, navigate to "Virtual Machines" and click "Create."
+2. Create a new resource group named "honeypot lab."
+3. Name the virtual machine "honeypot" or "honeypot-vm."
+4. Select the geographic region "West US 2."
+5. Leave the default image and size settings.
+6. Create a username and password for the VM, and remember these credentials.
+7. Under "Networking," navigate to the "Network Security Group" and create a new one.
+8. Remove the default inbound security rule and create a new one with the following settings:
+  - Source: Any
+  - Source port ranges: *
+  - Destination: Any
+  - Destination port ranges: *
+  - Protocol: Any
+  - Action: Allow
+  - Priority: 100
+  - Name: "danger-any-in"
+9. Review and create the virtual machine.
 
-### 3. Create a Virtual Machine (VM) and Configure as Honeypot
-1. In Azure portal search bar, type "Virtual machine"
-2. Click Add > "Azure Virtual Machine"
-3. Set options:
-   - Name: "HoneypotVM"
-   - Resource group: "HoneypotLab"
-   - Region: (same as resource group)
-   - Leave defaults for disk type, size
-   - Create username and secure password
-4. Click Review + Create, then Create
-5. Once deployed, go to VM > Connect > RDP
-6. Download RDP file, open to connect
-7. In the VM:
-   - Search "Windows Defender Firewall", turn Off all
-   - Search "Windows Firewall", turn off all
+### Step 3: Create a Log Analytics Workspace
+1. In the Azure portal, navigate to "Log Analytics Workspaces" and create a new workspace.
+2. Use the resource group "honeypot lab" and name the workspace "la-honeypot-1."
+3. Select the region "West US 2."
+4. Review and create the workspace.
 
-### 4. Create a Log Analytics Workspace
-1. In Azure, search "Log Analytics workspaces"
-2. Click Add
-3. Name it "HoneypotLogs"
-4. Select "HoneypotLab" resource group, same region
-5. Click OK
+### Step 4: Enable Log Collection
+1. In the Azure Security Center, navigate to "Pricing & Settings."
+2. Select the newly created Log Analytics workspace and turn on "Azure Defender."
+3. Turn off "SQL servers" and save the settings.
+4. Under "Data Collection," select "All Events" and save the settings.
+5. In the Log Analytics workspace, connect the workspace to the virtual machine.
 
-### 5. Connect VM to Log Analytics
-1. Go to "HoneypotLogs" workspace
-2. Under Settings > Virtual machines
-3. Click Add, select "HoneypotVM"
-4. Enable Log Analytics agent
+### Step 5: Set up Azure Sentinel
+1. In the Azure portal, navigate to "Azure Sentinel" and create a new instance.
+2. Select the Log Analytics workspace created earlier and add it to Azure Sentinel.
 
-### 6. Enable Azure Sentinel
-1. Search "Sentinel" in Azure portal
-2. Click Add
-3. Select "HoneypotLogs" workspace
+### Step 6: Disable Firewalls on the Virtual Machine
+1. Log in to the virtual machine using Remote Desktop Protocol (RDP).
+2. Open the Windows Defender Firewall and turn off the firewall for all profiles (Domain, Private, and Public).
+3. From your local machine, ping the virtual machine's IP address to ensure it is accepting ICMP echo requests.
 
-### 7. On VM, Download and Run Custom PowerShell Script
-1. On VM desktop, open Notepad
-2. Visit GitHub link in video description
-3. Copy all PowerShell code into new file
-4. Save as `LogExporter.ps1` on Desktop
-5. Open PowerShell (search in Start menu)
-6. Run: `Set-ExecutionPolicy Unrestricted`
-7. Navigate: `cd desktop:`
-8. Run script: `.\LogExporter.ps1`
-9. Visit https://ipgeolocation.io, create account
-10. Copy API key, paste into script variable
+### Step 7: Download and Configure the PowerShell Script
+1. Download the "Custom Security Log Exporter" PowerShell script from the provided GitHub link.
+2. Open PowerShell on the virtual machine and paste the script content.
+3. Save the script as "log-exporter.ps1" on the desktop.
+4. Obtain an API key from ipgeolocation.io by creating a free account.
+5. Replace the API key in the script with your own key.
+6. Run the PowerShell script.
 
-### 8. Create Custom Log in Log Analytics
-1. Go to Log Analytics workspace
-2. Click "Custom Logs" under "Workspace Data Sources"
-3. Click "Add custom log"
-4. Browse to `C:\ProgramData\failed_rdp.log` on VM
-5. Extract fields:
-   - latitude (numeric)
-   - longitude (numeric)
-   - country (text)
-   - state (text)
-   - sourceHost (text)
-   - label (text)
-   - timestamp (datetime)
+### Step 8: Create a Custom Log in Log Analytics
+1. In the Log Analytics workspace, navigate to "Custom Logs" and add a new custom log.
+2. Browse and select the "failed-rdp.log" file from your local machine's desktop.
+3. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
+4. Name the custom log "failed-rdp-with-geo."
+5. Extract fields from the log data, such as latitude, longitude, country, and label.
+6. Save the custom log configuration.
 
-### 9. Visualize Attacks in Sentinel Workbooks
-1. In Azure Sentinel, click "Workbooks"
-2. Add new workbook
-3. Click Edit
-4. Remove default tiles
-5. Add > Query > Paste Kusto query:
+### Step 9: Visualize the Attack Data on a Map
+1. In Azure Sentinel, navigate to "Workbooks" and create a new workbook.
+2. Add a query widget and paste the provided query to display the failed RDP login attempts with geolocation data.
+3. Add a map visualization and configure it to display the attack data using latitude and longitude or by country.
+4. Customize the map settings and labels as desired.
+5. Save the workbook as "failed-rdp-world-map."
 
-FailedRDPwithGeo_CL
-| where DestinationHostName_CF != "sample_host"
-| project TimeGenerated, SourceHost_CF, Country_CF, Latitude_d, Longitude_d, Label_CF
-| summarize count() by Country_CF, Latitude_d, Longitude_d, Label_CF
+### Step 10: Monitor and Visualize Attacks
+1. Leave the virtual machine running and the PowerShell script executing.
+2. Periodically refresh the map in Azure Sentinel to visualize the failed RDP login attempts from various IP addresses and countries.
+3. Observe the attack patterns and the countries from which the attacks originate.
 
-6. Set visualization to Map
-7. Configure Size by `count_`
-8. Save, close, refresh workbook
+### Step 11: Clean Up Resources (Optional)
+1. Once you have finished monitoring the attacks, navigate to the resource group in the Azure portal.
+2. Delete the resource group to clean up all the resources created during this lab and avoid incurring additional costs.
 
-### 10. Monitor and Analyze
-1. Leave VM running, LogExporter executing
-2. Check Sentinel Workbook map periodically
-3. Watch attacks appear from around the world!
-4. Analyze:
-- Usernames tried (admin, administrator, etc.)
-- Attack source patterns (Asia, Russia, etc.)
-- Attack frequency over time
-
-## Remember to delete your "HoneypotLab" resource group in Azure when you're done to avoid using up your free credits!
+Remember to replace any placeholders or variables with your specific values and adjust the instructions as needed based on your environment. Additionally, ensure you have the necessary permissions and follow best practices for security and resource management in Azure.
