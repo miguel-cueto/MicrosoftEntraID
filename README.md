@@ -211,19 +211,33 @@ while ($true)
 8. Run the PowerShell script.
 
 ### Step 8: Create a Custom Log in Log Analytics
-1. In the Log Analytics workspace, navigate to "Custom Logs" and add a new custom log.
-2. Browse and select the "failed-rdp.log" file from your local machine's desktop.
-3. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
-4. Name the custom log "failed-rdp-with-geo."
-5. Extract fields from the log data, such as latitude, longitude, country, and label.
-6. Save the custom log configuration.
+1. Go to the VM and press Window + R > C:\ProgramData\ > failed.rdp > copy the contents
+2. Go back to your PC Start Menu > Notepad > Paste the contents and save as "failed_rdp.log" on your Desktop
+3. In the Log Analytics workspace, navigate to "Custom Logs" and add a new custom log.
+4. Browse and select the "failed_rdp.log" file from your local machine's desktop.
+5. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
+6. Name the custom log "FAILED_RDP_WITH_GEO"
+7. Extract fields from the log data, such as destinationhost, sourcehost, state, timestamp, username, latitude, longitude, country, and label.
+8. Save the custom log configuration.
 
 ### Step 9: Visualize the Attack Data on a Map
 1. In Azure Sentinel, navigate to "Workbooks" and create a new workbook.
-2. Add a query widget and paste the provided query to display the failed RDP login attempts with geolocation data.
-3. Add a map visualization and configure it to display the attack data using latitude and longitude or by country.
-4. Customize the map settings and labels as desired.
-5. Save the workbook as "failed-rdp-world-map."
+2. Remove the 2 widgets that come with the workbook.
+3. Add a query widget and paste the following ...
+
+FAILED_RDP_WITH_GEO_CL | summarize event_count=count() by sourcehost_CF, latitude_CF, longitude_CF, country_CF, label_CF, destinationhost_CF
+| where destinationhost_CF != "samplehost"
+| where sourcehost_CF != ""
+
+5. The provided query will display the failed RDP login attempts with geolocation data.
+6. Add a map visualization and configure it to display the attack data using latitude and longitude or by country.
+  - Location Info using: Latitude/Longitude
+  - Latitude:  latitude_CF
+  - Longitude:  longitude_CF
+  - Size by:  event_count
+8. Customize the map settings and labels as desired.
+9. Save the workbook as "Failed RDP World Map" and change the location to "(US) West US 2"
+10. Turn auto refresh to 5 minutes.
 
 ### Step 10: Monitor and Visualize Attacks
 1. Leave the virtual machine running and the PowerShell script executing.
@@ -232,4 +246,4 @@ while ($true)
 
 ### Step 11: Clean Up Resources (Optional)
 1. Once you have finished monitoring the attacks, navigate to the resource group in the Azure portal.
-2. Delete the resource group to clean up all the resources created during this lab and avoid incurring additional costs.
+2. Delete the resource group "honeypotlab" to clean up all the resources created during this lab and avoid incurring additional costs.
