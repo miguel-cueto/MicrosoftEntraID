@@ -205,7 +205,7 @@ while ($true)
     }
 }
 
-4. Open PowerShell ISE on the virtual machine and paste the script content.
+4. Open PowerShell ISE on the virtual machine by clicking the Start Icon > Windows Powershell > Windows Powershell ISE > More > Run as Administrator and paste "Set-ExecutionPolicy Unrestricted" click "Yes to all" then the script content.
 5. Save the script as "Log-Exporter.ps1" on the desktop.
 6. Obtain an API key from ipgeolocation.io by creating a free account.
 7. Replace the API key in the script with your own key.
