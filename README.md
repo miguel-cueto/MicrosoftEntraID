@@ -214,12 +214,15 @@ while ($true)
 ### Step 8: Create a Custom Log in Log Analytics
 1. Go to the VM and press Window + R > C:\ProgramData\ > failed.rdp > copy the contents
 2. Go back to your PC Start Menu > Notepad > Paste the contents and save as "failed_rdp.log" on your Desktop
-3. In the Log Analytics workspace, navigate to "Custom Logs" and add a new custom log.
-4. Browse and select the "failed_rdp.log" file from your local machine's desktop.
-5. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
-6. Name the custom log "FAILED_RDP_WITH_GEO"
-7. Extract fields from the log data, such as destinationhost, sourcehost, state, timestamp, username, latitude, longitude, country, and label.
-8. Save the custom log configuration.
+3. In the Log Analytics workspace, click on "law-honeypot" > settings > tables > create > new custom log (MMA based)
+4. Browse and select the "failed_rdp.log" file from your local machine's desktop and click next
+5. In "Collection Path" choose Windows for type and "C:\ProgramData\failed_rdp.log" for path, click next
+6. In "Details" copy and paste "FAILED_RDP_WITH_GEO" in custom log names > click next > create
+7. In the Log Analytics workspace, click on "law-honeypot" > logs > FAILED_RDP_WITH_GEO_CL > Run
+8. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
+9. Name the custom log "FAILED_RDP_WITH_GEO"
+10. Extract fields from the log data, such as destinationhost, sourcehost, state, timestamp, username, latitude, longitude, country, and label.
+11. Save the custom log configuration.
 
 ### Step 9: Visualize the Attack Data on a Map
 1. In Azure Sentinel, navigate to "Workbooks" and create a new workbook.
