@@ -20,14 +20,15 @@ This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a 
 1. Go to Azure (https://azure.microsoft.com/en-us/free/) and create a new Azure subscription. You will receive $200 worth of free credits for the first month.
 
 ### Step 2: Create a Virtual Machine
-1. In the Azure portal (portal.azure.com), go to the search engine on the top navigate to "Virtual Machines" and click "Create."
+1. In the Azure portal (portal.azure.com), go to the search engine on the top navigate to "Virtual Machines" and click "Create" > click "Azure virtual machine."
 2. Create a new resource group named "honeypotlab"
 3. Name the virtual machine "honeypot-vm."
-4. Select the geographic region "West US 3."
-5. Leave the default image and size settings.
-6. Create a username and password for the VM, and remember these credentials.
+4. Select the geographic region "West US 2" and availability zone "zone 2"
+5. Select image "Windows 10 Pro, version 22H2 - x64 Gen 2."
+6. Create a username and password for the VM, remember these credentials, and check the box under "Licensing" that reads "I confirm I have an eligible Windows 10/11 license with multi-tenant hosting rights" before clicking on "Next : Disk >" and "Next : Networking >"
 7. Under "Networking," navigate to the "NIC Network Security Group" click advanced
-8. Remove the default inbound security rule and create a new one with the following settings:
+8. Click on "create new" under "Configure network security group
+" and remove the default inbound security rule and create a new one with the following settings:
   - Source: Any
   - Source port ranges: *
   - Destination: Any
@@ -40,26 +41,26 @@ This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a 
 
 ### Step 3: Create a Log Analytics Workspace
 1. In the Azure search engine, navigate to "Log Analytics Workspaces" and create a new workspace.
-2. Use the resource group "Honeypotlab" and name the workspace "law-honeypot1."
+2. Use the resource group "Honeypotlab" and name the workspace "law-honeypot."
 3. Select the region "West US 2."
 4. Review and create the workspace.
 
 ### Step 4: Enable Log Collection
-1. In the Azure Search Engine go to Security Center, navigate to "Pricing & Settings."
-2. Select the newly created Log Analytics workspace "law-honeypot1" and turn on "Azure Defender."
-3. Turn off "SQL servers" and save the settings.
+1. In the Azure Search Engine go to "Microsoft Defender for Cloud", and navigate to "Environment settings" under Management on the left-hand side.
+2. Select ">" next to Azure > Tenant Root Group > Azure Subscription 1 and click on "law-honeypot."
+3. Turn on "Servers" and save the settings.
 4. Under "Data Collection," select "All Events" and save the settings.
-5. Use the Search Engine to go back to Log Analytics Workspace, connect the workspace "law-honeypot1" > virtual machine > "honeypot-vm" > and click Connect
+5. Use the Search Engine to go back to Log Analytics Workspace, connect the workspace "law-honeypot" > classic > virtual machines > "honeypot-vm" > and click Connect
 
 ### Step 5: Set up Azure Sentinel
-1. In the Azure Search Engine, navigate to "Azure Sentinel" and create a new instance.
-2. Select the Log Analytics workspace created "law-honeypot1" and add it to Azure Sentinel.
+1. In the Azure Search Engine, navigate to "Microsoft Sentinel" and create a new instance.
+2. Select the Log Analytics workspace created "law-honeypot" and click "Add"
 
 ### Step 6: Disable Firewalls on the Virtual Machine
 1. In the Azure Search Engine, navigate to "Virtual Machine" > "honeypot-vm" > copy the Public IP address and log into it using Remote Desktop Protocol (RDP).
-2. Start menu > Remote Desktop Connection > paste the IP address > connect > use the username and password created initially.
-3. In the VM set up Microsoft Edge
-4. Open the Windows Defender Firewall in the VM and turn off the firewall for all profiles (Domain, Private, and Public).
+2. Start menu > Remote Desktop Connection > paste the IP address > connect > use the username and password created initially > Click "Yes" on the certificate windows
+3. In the VM set up toggle "no" on all privacy settings, press "yes" for networks, and start Microsoft Edge without your data
+4. Open the Windows Defender Firewall (wf.msc) in the VM > click Windows Defender Firewall Properties and turn off the firewall for all profiles (Domain, Private, and Public).
 5. From your local machine, ping the virtual machine's IP address to ensure it is accepting ICMP echo requests.
 
 ### Step 7: Configure the PowerShell Script
