@@ -26,13 +26,43 @@ This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel
   
 ### Step 2: Create a Virtual Machine
 1. In the Azure portal (portal.azure.com), go to the search engine on the top navigate to "Virtual Machines" and click "Create" > click "Azure virtual machine."
+
+<p align="center">
+<img src="https://i.imgur.com/X2VZKTV.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
 2. Create a new resource group named "honeypotlab"
 3. Name the virtual machine "honeypot-vm."
 4. Select the geographic region "West US 2" and availability zone "zone 2"
-5. Select image "Windows 10 Pro, version 22H2 - x64 Gen 2."
+
+<p align="center">
+<img src="https://i.imgur.com/UKcpGJA.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
+5. Select the image "Windows 10 Pro, version 22H2 - x64 Gen 2."
+
+<p align="center">
+<img src="https://i.imgur.com/TtI8Z8A.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
 6. Create a username and password for the VM, remember these credentials, and check the box under "Licensing" that reads "I confirm I have an eligible Windows 10/11 license with multi-tenant hosting rights" before clicking on "Next : Disk >" and "Next : Networking >"
-7. Under "Networking," navigate to the "NIC Network Security Group" click advanced
-8. Click on "create new" under "Configure network security group
+
+<p align="center">
+<img src="https://i.imgur.com/8ekpv7t.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
+7. Under "Networking," navigate to the "NIC Network Security Group" and click Advanced
+
+<p align="center">
+<img src="https://i.imgur.com/SHIqtV3.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
+8. Click on "Create new" under "Configure network security group
 " and remove the default inbound security rule and create a new one with the following settings:
   - Source: Any
   - Source port ranges: *
@@ -42,6 +72,17 @@ This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel
   - Action: Allow
   - Priority: 100
   - Name: "DANGER_ANY_IN"
+
+<p align="center">
+<img src="https://i.imgur.com/SHIqtV3.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/SHIqtV3.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+  
 9. Review and create the virtual machine.
 
 ### Step 3: Create a Log Analytics Workspace
