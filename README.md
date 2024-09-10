@@ -74,17 +74,32 @@ This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel
   - Name: "DANGER_ANY_IN"
 
 <p align="center">
-<img src="https://i.imgur.com/SHIqtV3.png" height="80%" width="80%" alt="Azure"/>
+<img src="https://i.imgur.com/fzmFOx1.png" height="80%" width="80%" alt="Azure"/>
 <br />
 <br />
   
 <p align="center">
-<img src="https://i.imgur.com/SHIqtV3.png" height="80%" width="80%" alt="Azure"/>
+<img src="https://i.imgur.com/FeXE8ps.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+    
+<p align="center">
+<img src="https://i.imgur.com/eVzMkVf.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+    
+<p align="center">
+<img src="https://i.imgur.com/DIydrmv.png" height="80%" width="80%" alt="Azure"/>
+<br />
+<br />
+
+9. Review and create the virtual machine.
+    
+<p align="center">
+<img src="https://i.imgur.com/oT9BVc5.png" height="80%" width="80%" alt="Azure"/>
 <br />
 <br />
   
-9. Review and create the virtual machine.
-
 ### Step 3: Create a Log Analytics Workspace
 1. In the Azure search engine, navigate to "Log Analytics Workspaces" and create a new workspace.
 2. Use the resource group "Honeypotlab" and name the workspace "law-honeypot."
