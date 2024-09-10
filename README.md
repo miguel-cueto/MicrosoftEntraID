@@ -218,34 +218,50 @@ while ($true)
 4. Browse and select the "failed_rdp.log" file from your local machine's desktop and click next
 5. In "Collection Path" choose Windows for type and "C:\ProgramData\failed_rdp.log" for path, click next
 6. In "Details" copy and paste "FAILED_RDP_WITH_GEO" in custom log names > click next > create
-7. In the Log Analytics workspace, click on "law-honeypot" > logs > FAILED_RDP_WITH_GEO_CL > Run
-8. Provide the collection path as "C:\ProgramData\failed_rdp.log" on the virtual machine.
-9. Name the custom log "FAILED_RDP_WITH_GEO"
-10. Extract fields from the log data, such as destinationhost, sourcehost, state, timestamp, username, latitude, longitude, country, and label.
-11. Save the custom log configuration.
+7. In the Log Analytics workspace, click on "law-honeypot" > logs > and copy and paste the following:
+
+FAILED_RDP_WITH_GEO_CL 
+| extend username = extract(@"username:([^,]+)", 1, RawData),
+         timestamp = extract(@"timestamp:([^,]+)", 1, RawData),
+         latitude = extract(@"latitude:([^,]+)", 1, RawData),
+         longitude = extract(@"longitude:([^,]+)", 1, RawData),
+         sourcehost = extract(@"sourcehost:([^,]+)", 1, RawData),
+         state = extract(@"state:([^,]+)", 1, RawData),
+         label = extract(@"label:([^,]+)", 1, RawData),
+         destination = extract(@"destinationhost:([^,]+)", 1, RawData),
+         country = extract(@"country:([^,]+)", 1, RawData)
+| where destination != "samplehost"
+| where sourcehost != ""
+| summarize event_count=count() by latitude, longitude, sourcehost, label, destination, country
+
+8. Click "Run"
 
 ### Step 9: Visualize the Attack Data on a Map
-1. In Azure Sentinel, navigate to "Workbooks" and create a new workbook.
+1. In Microsoft Sentinel, click on "law-honeypot" > Threat Management > Workbooks > Add Workbook > Edit
 2. Remove the 2 widgets that come with the workbook.
 3. Add a query widget and paste the following ...
 
-FAILED_RDP_WITH_GEO_CL | summarize event_count=count() by sourcehost_CF, latitude_CF, longitude_CF, country_CF, label_CF, destinationhost_CF
-| where destinationhost_CF != "samplehost"
-| where sourcehost_CF != ""
+FAILED_RDP_WITH_GEO_CL 
+| extend username = extract(@"username:([^,]+)", 1, RawData),
+         timestamp = extract(@"timestamp:([^,]+)", 1, RawData),
+         latitude = extract(@"latitude:([^,]+)", 1, RawData),
+         longitude = extract(@"longitude:([^,]+)", 1, RawData),
+         sourcehost = extract(@"sourcehost:([^,]+)", 1, RawData),
+         state = extract(@"state:([^,]+)", 1, RawData),
+         label = extract(@"label:([^,]+)", 1, RawData),
+         destination = extract(@"destinationhost:([^,]+)", 1, RawData),
+         country = extract(@"country:([^,]+)", 1, RawData)
+| where destination != "samplehost"
+| where sourcehost != ""
+| summarize event_count=count() by latitude, longitude, sourcehost, label, destination, country
 
-5. The provided query will display the failed RDP login attempts with geolocation data.
-6. Add a map visualization and configure it to display the attack data using latitude and longitude or by country.
-  - Location Info using: Latitude/Longitude
-  - Latitude:  latitude_CF
-  - Longitude:  longitude_CF
-  - Size by:  event_count
-8. Customize the map settings and labels as desired.
-9. Save the workbook as "Failed RDP World Map" and change the location to "(US) West US 2"
-10. Turn auto refresh to 5 minutes.
+4. Run Quiry > change Visualization to "Map."  The provided query will display the failed RDP login attempts with geolocation data.
+5. Save the workbook as "Failed RDP World Map" and change the location to "(US) West US 2"
+6. Turn auto refresh to 5 minutes.
 
 ### Step 10: Monitor and Visualize Attacks
 1. Leave the virtual machine running and the PowerShell script executing.
-2. Periodically refresh the map in Azure Sentinel to visualize the failed RDP login attempts from various IP addresses and countries.
+2. Periodically refresh the map in Microsoft Sentinel to visualize the failed RDP login attempts from various IP addresses and countries.
 3. Observe the attack patterns and the countries from which the attacks originate.
 
 ### Step 11: Clean Up Resources (Optional)
