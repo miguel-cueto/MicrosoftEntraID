@@ -20,7 +20,7 @@ This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel
 1. Go to Azure (https://azure.microsoft.com/en-us/free/) and create a new Azure subscription. You will receive $200 worth of free credits for the first month.
 
 <p align="center">
-<img src="https://i.imgur.com/c1TC8mC.png" height="80%" width="80%" alt="VirtualBox"/>
+<img src="https://imgur.com/1JxWLpJ" height="80%" width="80%" alt="VirtualBox"/>
 <br />
 <br />
   
