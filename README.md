@@ -1,12 +1,12 @@
-# Setting up Azure Sentinel with a Vulnerable VM Honeypot
+# Setting up Microsoft Sentinel with a Vulnerable VM Honeypot
 
 ## Description
-This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a cloud-based Security Information and Event Management (SIEM) solution, along with a vulnerable virtual machine (VM) honeypot. The goal is to monitor and log failed Remote Desktop Protocol (RDP) login attempts from various IP addresses around the world and visualize the attack data on a map.
+This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel, a cloud-based Security Information and Event Management (SIEM) solution, along with a vulnerable virtual machine (VM) honeypot. The goal is to monitor and log failed Remote Desktop Protocol (RDP) login attempts from various IP addresses around the world and visualize the attack data on a map.
 
 ## Language and Utilities
 - PowerShell
 - Azure Portal
-- Azure Sentinel
+- Microsoft Sentinel
 - Log Analytics Workspace
 - ipgeolocation.io API
 
@@ -19,6 +19,11 @@ This guide provides a step-by-step walkthrough for setting up Azure Sentinel, a 
 ### Step 1: Create an Azure Subscription
 1. Go to Azure (https://azure.microsoft.com/en-us/free/) and create a new Azure subscription. You will receive $200 worth of free credits for the first month.
 
+<p align="center">
+<img src="https://i.imgur.com/c1TC8mC.png" height="80%" width="80%" alt="VirtualBox"/>
+<br />
+<br />
+  
 ### Step 2: Create a Virtual Machine
 1. In the Azure portal (portal.azure.com), go to the search engine on the top navigate to "Virtual Machines" and click "Create" > click "Azure virtual machine."
 2. Create a new resource group named "honeypotlab"
