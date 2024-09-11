@@ -101,27 +101,119 @@ This guide provides a step-by-step walkthrough for setting up Microsoft Sentinel
 <br />
   
 ### Step 3: Create a Log Analytics Workspace
-1. In the Azure search engine, navigate to "Log Analytics Workspaces" and create a new workspace.
+1. In the Azure search engine, navigate to "Log Analytics Workspaces" and create a new workspace.    
+
+<p align="center">
+<img src="https://i.imgur.com/FYHau88.png" height="80%" width="80%" alt="Azure 55"/>
+<br />
+<br />
+  
 2. Use the resource group "Honeypotlab" and name the workspace "law-honeypot."
-3. Select the region "West US 2."
+3. Select the region "West US 2."    
+
+<p align="center">
+<img src="https://i.imgur.com/mK72WWX.png" height="80%" width="80%" alt="Azure 56"/>
+<br />
+<br />
+  
 4. Review and create the workspace.
 
 ### Step 4: Enable Log Collection
 1. In the Azure Search Engine go to "Microsoft Defender for Cloud", and navigate to "Environment settings" under Management on the left-hand side.
 2. Select ">" next to Azure > Tenant Root Group > Azure Subscription 1 and click on "law-honeypot."
+
+<p align="center">
+<img src="https://i.imgur.com/YifLpEe.png" height="80%" width="80%" alt="Azure 58"/>
+<br />
+<br />
+  
 3. Turn on "Servers" and save the settings.
+
+<p align="center">
+<img src="https://i.imgur.com/YDSyNAY.png" height="80%" width="80%" alt="Azure 59"/>
+<br />
+<br />
+  
 4. Under "Data Collection," select "All Events" and save the settings.
+
+<p align="center">
+<img src="https://i.imgur.com/btVStNh.png" height="80%" width="80%" alt="Azure 60"/>
+<br />
+<br />
+  
 5. Use the Search Engine to go back to Log Analytics Workspace, connect the workspace "law-honeypot" > classic > virtual machines > "honeypot-vm" > and click Connect
+
+<p align="center">
+<img src="https://i.imgur.com/UZfzERz.png" height="80%" width="80%" alt="Azure 61"/>
+<br />
+<br />
+  
 
 ### Step 5: Set up Azure Sentinel
 1. In the Azure Search Engine, navigate to "Microsoft Sentinel" and create a new instance.
+
+<p align="center">
+<img src="https://i.imgur.com/ZKMKecX.png" height="80%" width="80%" alt="Azure 62"/>
+<br />
+<br />
+  
 2. Select the Log Analytics workspace created "law-honeypot" and click "Add"
+
+<p align="center">
+<img src="https://i.imgur.com/IqLLSeG.png" height="80%" width="80%" alt="Azure 63"/>
+<br />
+<br />
+  
 
 ### Step 6: Disable Firewalls on the Virtual Machine
 1. In the Azure Search Engine, navigate to "Virtual Machine" > "honeypot-vm" > copy the Public IP address and log into it using Remote Desktop Protocol (RDP).
+
+<p align="center">
+<img src="https://i.imgur.com/PpZQn0t.png" height="80%" width="80%" alt="Azure 64"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/0eF9KzE.png" height="80%" width="80%" alt="Azure 65"/>
+<br />
+<br />
+  
 2. Start menu > Remote Desktop Connection > paste the IP address > connect > use the username and password created initially > Click "Yes" on the certificate windows
+
+<p align="center">
+<img src="https://i.imgur.com/yByOqwW.png" height="80%" width="80%" alt="Azure 66"/>
+<br />
+<br />
+  
 3. In the VM set up toggle "no" on all privacy settings, press "yes" for networks, and start Microsoft Edge without your data
+
+<p align="center">
+<img src="https://i.imgur.com/YNGZg98.png" height="80%" width="80%" alt="Azure 67"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/jU7WItx.png" height="80%" width="80%" alt="Azure 68"/>
+<br />
+<br />
+  
 4. Open the Windows Defender Firewall (wf.msc) in the VM > click Windows Defender Firewall Properties and turn off the firewall for all profiles (Domain, Private, and Public).
+
+<p align="center">
+<img src="https://i.imgur.com/R3UArjv.png" height="80%" width="80%" alt="Azure 69"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/IuoA6EW.png" height="80%" width="80%" alt="Azure 70"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/bJkJicN.png" height="80%" width="80%" alt="Azure 71"/>
+<br />
+<br />
+  
 5. From your local machine, ping the virtual machine's IP address to ensure it is accepting ICMP echo requests.
 
 ### Step 7: Configure the PowerShell Script
