@@ -326,5 +326,6 @@ FAILED_RDP_WITH_GEO_CL
 3. Observe the attack patterns and the countries from which the attacks originate.
 
 ### Step 11: Clean Up Resources (Optional)
-1. Once you have finished monitoring the attacks, navigate to the resource group in the Azure portal.
-2. Delete the resource group "honeypotlab" to clean up all the resources created during this lab and avoid incurring additional costs.
+1. Go to the  Azure portal > Find your resource group (honeypotlab) > Click on Delete resource group. This will delete all resources within the group, including the VM and Log Analytics workspace if you haven’t deleted them individually.
+2. Check the box "Apply force delete for selected Virtual machines and Virtual machine scale sets" and write the name of the resource group "honeypotlab" then click "Delete."
+4. Ensure there are no other resources under your subscription that might be incurring charges by going to Cost Management + Billing in the Azure portal to review your usage and ensure no unexpected charges.
