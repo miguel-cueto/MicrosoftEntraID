@@ -357,20 +357,77 @@ while ($true)
         }
     }
 }
+  
+<p align="center">
+<img src="https://i.imgur.com/lXPakqU.png" height="80%" width="80%" alt="Azure 72"/>
+<br />
+<br />
+  
+4. Open PowerShell ISE on the virtual machine by clicking the Start Icon > Windows Powershell > Windows Powershell ISE > More > Run as Administrator and paste "Set-ExecutionPolicy Unrestricted" click "Yes to all" then the script content.  
 
-4. Open PowerShell ISE on the virtual machine by clicking the Start Icon > Windows Powershell > Windows Powershell ISE > More > Run as Administrator and paste "Set-ExecutionPolicy Unrestricted" click "Yes to all" then the script content.
-5. Save the script as "Log-Exporter.ps1" on the desktop.
+5. Save the script as "Log-Exporter.ps1" on the desktop.  
+
+<p align="center">
+<img src="https://i.imgur.com/XkASuYV.png" height="80%" width="80%" alt="Azure 73"/>
+<br />
+<br />
+  
 6. Obtain an API key from ipgeolocation.io by creating a free account.
 7. Replace the API key in the script with your own key.
 8. Run the PowerShell script.
 
+<p align="center">
+<img src="https://i.imgur.com/EXedgTv.png" height="80%" width="80%" alt="Azure 74"/>
+<br />
+<br />
+  
 ### Step 8: Create a Custom Log in Log Analytics
 1. Go to the VM and press Window + R > C:\ProgramData\ > failed.rdp > copy the contents
 2. Go back to your PC Start Menu > Notepad > Paste the contents and save as "failed_rdp.log" on your Desktop
+
+<p align="center">
+<img src="https://i.imgur.com/QpLeYuo.png" width="80%" alt="Azure 75"/>
+<br />
+<br />
+  
 3. In the Log Analytics workspace, click on "law-honeypot" > settings > tables > create > new custom log (MMA based)
-4. Browse and select the "failed_rdp.log" file from your local machine's desktop and click next
-5. In "Collection Path" choose Windows for type and "C:\ProgramData\failed_rdp.log" for path, click next
-6. In "Details" copy and paste "FAILED_RDP_WITH_GEO" in custom log names > click next > create
+
+<p align="center">
+<img src="https://i.imgur.com/E1YidlU.png" height="80%" width="80%" alt="Azure 76"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/mHSIlNf.png" height="80%" width="80%" alt="Azure 77"/>
+<br />
+<br />
+
+4. Browse and select the "failed_rdp.log" file from your local machine's desktop and click next  
+
+<p align="center">
+<img src="https://i.imgur.com/Bq17Zk6.png" height="80%" width="80%" alt="Azure 78"/>
+<br />
+<br />
+  
+5. In "Collection Path" choose Windows for type and "C:\ProgramData\failed_rdp.log" for path, click next  
+
+<p align="center">
+<img src="https://i.imgur.com/s7i1jmD.png" height="80%" width="80%" alt="Azure 79"/>
+<br />
+<br />
+  
+6. In "Details" copy and paste "FAILED_RDP_WITH_GEO" in custom log names > click next > create  
+
+<p align="center">
+<img src="https://i.imgur.com/BBv2goU.png" height="80%" width="80%" alt="Azure 80"/>
+<br />
+<br />
+    
+<p align="center">
+<img src="https://i.imgur.com/AxNa2bV.png" height="80%" width="80%" alt="Azure 81"/>
+<br />
+<br />
+  
 7. In the Log Analytics workspace, click on "law-honeypot" > logs > and copy and paste the following:
 
 FAILED_RDP_WITH_GEO_CL 
@@ -387,11 +444,36 @@ FAILED_RDP_WITH_GEO_CL
 | where sourcehost != ""
 | summarize event_count=count() by latitude, longitude, sourcehost, label, destination, country
 
-8. Click "Run"
+8. Click "Run"  
+
+<p align="center">
+<img src="https://i.imgur.com/qPfQY2e.png" height="80%" width="80%" alt="Azure 84"/>
+<br />
+<br />
 
 ### Step 9: Visualize the Attack Data on a Map
 1. In Microsoft Sentinel, click on "law-honeypot" > Threat Management > Workbooks > Add Workbook > Edit
+
+<p align="center">
+<img src="https://i.imgur.com/tQkO6XQ.png" height="80%" width="80%" alt="Azure 85"/>
+<br />
+<br />
+
+
+<p align="center">
+<img src="https://i.imgur.com/aHFMfdE.png" height="80%" width="80%" alt="Azure 86"/>
+<br />
+<br />
+
+
 2. Remove the 2 widgets that come with the workbook.
+
+<p align="center">
+<img src="https://i.imgur.com/7kZW3jc.png" height="80%" width="80%" alt="Azure 87"/>
+<br />
+<br />
+
+
 3. Add a query widget and paste the following ...
 
 FAILED_RDP_WITH_GEO_CL 
@@ -408,16 +490,90 @@ FAILED_RDP_WITH_GEO_CL
 | where sourcehost != ""
 | summarize event_count=count() by latitude, longitude, sourcehost, label, destination, country
 
+<p align="center">
+<img src="https://i.imgur.com/28p9VBc.png" height="80%" width="80%" alt="Azure 88"/>
+<br />
+<br />
+
+
+<p align="center">
+<img src="https://i.imgur.com/21f2v4G.png" height="80%" width="80%" alt="Azure 89"/>
+<br />
+<br />
+
+
 4. Run Quiry > change Visualization to "Map."  The provided query will display the failed RDP login attempts with geolocation data.
+
+<p align="center">
+<img src="https://i.imgur.com/Q4OouEv.png" height="80%" width="80%" alt="Azure 90"/>
+<br />
+<br />
+
+
+<p align="center">
+<img src="https://i.imgur.com/V1zQnUN.png" height="80%" width="80%" alt="Azure 91"/>
+<br />
+<br />
+
+
 5. Save the workbook as "Failed RDP World Map" and change the location to "(US) West US 2"
+
+<p align="center">
+<img src="https://i.imgur.com/3l1Y5nF.png" height="80%" width="80%" alt="Azure 93"/>
+<br />
+<br />
+
+<p align="center">
+<img src="https://i.imgur.com/bTQMNuo.png" height="80%" width="80%" alt="Azure 94"/>
+<br />
+<br />
+
 6. Turn auto refresh to 5 minutes.
 
+<p align="center">
+<img src="https://i.imgur.com/Oz69RNZ.png" height="80%" width="80%" alt="Azure 95"/>
+<br />
+<br />
+
+<p align="center">
+<img src="https://i.imgur.com/3IykdAZ.png" height="80%" width="80%" alt="Azure 96"/>
+<br />
+<br />
+  
 ### Step 10: Monitor and Visualize Attacks
 1. Leave the virtual machine running and the PowerShell script executing.
 2. Periodically refresh the map in Microsoft Sentinel to visualize the failed RDP login attempts from various IP addresses and countries.
+
+<p align="center">
+<img src="https://i.imgur.com/q0uTDpn.png" height="80%" width="80%" alt="Azure 97"/>
+<br />
+<br />
+  
 3. Observe the attack patterns and the countries from which the attacks originate.
 
+<p align="center">
+<img src="https://i.imgur.com/EX2JCoS.png" height="80%" width="80%" alt="Azure 98"/>
+<br />
+<br />
+  
 ### Step 11: Clean Up Resources (Optional)
 1. Go to the  Azure portal > Find your resource group (honeypotlab) > Click on Delete resource group. This will delete all resources within the group, including the VM and Log Analytics workspace if you haven’t deleted them individually.
+
+<p align="center">
+<img src="https://i.imgur.com/ahgyQTN.png" height="80%" width="80%" alt="Azure 100"/>
+<br />
+<br />
+  
+<p align="center">
+<img src="https://i.imgur.com/MvQXIYh.png" height="80%" width="80%" alt="Azure 101"/>
+<br />
+<br />
+  
 2. Check the box "Apply force delete for selected Virtual machines and Virtual machine scale sets" and write the name of the resource group "honeypotlab" then click "Delete."
+
+<p align="center">
+<img src="https://i.imgur.com/nSFtcZi.png" height="80%" width="80%" alt="Azure 102"/>
+<br />
+<br />
+  
 4. Ensure there are no other resources under your subscription that might be incurring charges by going to Cost Management + Billing in the Azure portal to review your usage and ensure no unexpected charges.
